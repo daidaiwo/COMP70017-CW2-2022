@@ -135,7 +135,7 @@ contract TicTacToe {
      */
     function validMove(uint pos) public view returns (bool) {
       /*Please complete the code here.*/
-      if(pos>=1 && pos<=8 && board[pos]==0 ){
+      if(pos>=0 && pos<=8 && board[pos]==0 ){
           return true;
       }else{
           return false;
@@ -148,7 +148,7 @@ contract TicTacToe {
      */
     modifier _validMove(uint pos) {
       /*Please complete the code here.*/
-      require(pos>=1 && pos<=8 && board[pos]==0);
+      require(pos>=0 && pos<=8 && board[pos]==0);
       _;
     }
 
