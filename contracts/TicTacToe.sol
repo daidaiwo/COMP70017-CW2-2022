@@ -49,6 +49,11 @@ contract TicTacToe {
       **/    
     function _threeInALine(uint a, uint b, uint c) private view returns (bool){
         /*Please complete the code here.*/
+        if (a==b && b==c){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**
@@ -58,6 +63,7 @@ contract TicTacToe {
      */
     function _getStatus(uint pos) private view returns (uint) {
         /*Please complete the code here.*/
+        return status;
     }
 
     /**
@@ -67,6 +73,29 @@ contract TicTacToe {
      */
     modifier _checkStatus(uint pos) {
         /*Please complete the code here.*/
+        require(status==0);
+        _;
+        if(_threeInALine(board[0],board[1],board[2])&&board[0]!=0){
+            status=board[0];
+        }else if(_threeInALine(board[3],board[4],board[5])&&board[3]!=0){
+            status=board[3];
+        }else if(_threeInALine(board[6],board[7],board[8])&&board[6]!=0){
+            status=board[6];
+        }else if(_threeInALine(board[0],board[3],board[6])&&board[0]!=0){
+            status=board[0];
+        }else if(_threeInALine(board[1],board[4],board[7])&&board[1]!=0){
+            status=board[1];
+        }else if(_threeInALine(board[2],board[5],board[8])&&board[2]!=0){
+            status=board[2];
+        }else if(_threeInALine(board[0],board[4],board[8])&&board[0]!=0){
+            status=board[0];
+        }else if(_threeInALine(board[2],board[4],board[6])&&board[2]!=0){
+            status=board[2];
+        }else if(board[0]!=0&&board[1]!=0&&board[2]!=0&&board[3]!=0&&board[4]!=0&&board[5]!=0&&board[6]!=0&&board[7]!=0&&board[8]!=0){
+            status=3;
+        }else{
+            status=0;
+        }
     }
 
     /**
@@ -75,6 +104,13 @@ contract TicTacToe {
      */
     function myTurn() public view returns (bool) {
        /*Please complete the code here.*/
+       if(players[0]==msg.sender && turn == 1){
+           return true;
+       }else if(players[1]==msg.sender && turn ==2){
+           return true;
+       }else{
+           return false;
+       }
     }
 
     /**
@@ -83,6 +119,13 @@ contract TicTacToe {
      */
     modifier _myTurn() {
       /*Please complete the code here.*/
+      require((players[0]==msg.sender && turn == 1) || (players[1]==msg.sender && turn ==2));
+      _;
+      if(turn == 1){
+          turn = 2;
+      }else if(turn == 2){
+          turn = 1;
+      }
     }
 
     /**
@@ -92,6 +135,11 @@ contract TicTacToe {
      */
     function validMove(uint pos) public view returns (bool) {
       /*Please complete the code here.*/
+      if(pos>=1 && pos<=8 && board[pos]==0 ){
+          return true;
+      }else{
+          return false;
+      }
     }
 
     /**
@@ -100,6 +148,8 @@ contract TicTacToe {
      */
     modifier _validMove(uint pos) {
       /*Please complete the code here.*/
+      require(pos>=1 && pos<=8 && board[pos]==0);
+      _;
     }
 
     /**
